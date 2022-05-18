@@ -1,8 +1,15 @@
-import React from 'react';
-import { RiMenuFoldFill } from 'react-icons/ri';
+import { signOut } from 'firebase/auth';
+import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
+import { MdCloseFullscreen } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 const Navbar = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [user] = useAuthState(auth);
   const navLinks = [
     { id: 1, name: 'Home', path: '/' },
     { id: 1, name: 'My Task', path: '/myTask' },
@@ -10,47 +17,111 @@ const Navbar = () => {
   ];
   return (
     <section
-      style={{ maxWidth: '1200px' }}
-      className="mx-auto container px-4 md:px-10 pt-1"
+      style={{ maxWidth: '1024px' }}
+      className="container px-2 mx-auto pt-1 sticky top-0 z-30"
     >
-      <div class="drawer drawer-end">
-        <input id="menu" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col">
-          <div class="w-full navbar bg-primary rounded-full shadow">
-            <div class="flex-1 px-2 mx-2 text-accent text-3xl font-bold tracking-wide">
-              <Link to="/">Task Calc.</Link>
-            </div>
-            <div class="flex-none lg:hidden">
-              <label for="menu" class="btn btn-square btn-ghost">
-                <RiMenuFoldFill size={35} />
-              </label>
-            </div>
-
-            <div class="flex-none hidden lg:block">
-              <ul class="menu-horizontal mr-6">
+      <div className="navbar bg-gradient-to-r from-[#19D3AE] to-[#0FCFEC] rounded-full text-gray-100 flex">
+        <div className="flex justify-between items-center w-full mx-3">
+          <div
+            className={`drawer ml-0 -mt-1 rounded-r lg:hidden absolute left-0 top-0 bg-accent z-50 ${
+              drawerOpen ? 'w-2/3 sm:w-1/2' : 'hidden'
+            } `}
+          >
+            <div className="drawer-side rounded mx-auto mt-5">
+              <label htmlFor="my-drawer" className="drawer-overlay"></label>
+              <ul className="menu p-4 overflow-y-auto bg-accent text-base-content w-full">
                 {navLinks.map((link) => (
                   <li key={link.id}>
-                    <Link
-                      className="mr-4 text-accent font-semibold uppercase"
-                      to={link.path}
-                    >
+                    <Link className="text-white" to={link.path}>
                       {link.name}
                     </Link>
                   </li>
                 ))}
               </ul>
+              {user ? (
+                <button
+                  onClick={() => signOut(auth)}
+                  className="w-full btn bg-slate-400 text-black  my-2"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <>
+                  <Link
+                    className="w-full btn bg-slate-400 text-black  my-2"
+                    to="/login"
+                  >
+                    LogIn
+                  </Link>
+                  <Link
+                    className="w-full btn bg-white outline-none border-0 text-accent hover:text-secondary"
+                    to="/signup"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
+
+          <Link
+            to="/"
+            className="font-bold normal-case text-2xl flex items-center"
+          >
+            <span className="text-accent">Task Calc.</span>
+          </Link>
+
+          <div className="lg:hidden">
+            <label className="btn btn-circle swap swap-rotate">
+              <input type="checkbox" />
+
+              <MdCloseFullscreen
+                onClick={() => setDrawerOpen(!drawerOpen)}
+                className="swap-on fill-current"
+                size={30}
+              />
+              <AiOutlineMenuUnfold
+                onClick={() => setDrawerOpen(!drawerOpen)}
+                className="swap-off fill-current"
+                size={30}
+              />
+            </label>
+          </div>
         </div>
-        <div class="drawer-side">
-          <label for="menu" class="drawer-overlay"></label>
-          <ul class="menu p-4 overflow-y-auto w-80 bg-primary">
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal p-0">
             {navLinks.map((link) => (
-              <li key={link.id}>
-                <Link to={link.path}>{link.name}</Link>
+              <li key={link.id} className="mr-1">
+                <Link className="text-[16px] font-semibold" to={link.path}>
+                  {link.name}
+                </Link>
               </li>
             ))}
           </ul>
+          {user ? (
+            <button
+              onClick={() => {
+                toast.success(`Good Bye ${user.displayName}`);
+                signOut(auth);
+              }}
+              className="btn btn-outline text-lg rounded-full capitalize mr-2"
+              to="/login"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <>
+              <Link className="btn bg-accent text-primary mr-2" to="/login">
+                LogIn
+              </Link>
+              <Link
+                className="btn bg-white outline-none border-0 text-accent hover:text-secondary mr-2"
+                to="/signup"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </section>
