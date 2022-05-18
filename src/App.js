@@ -1,5 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
+import AddTask from './Pages/AddTask/AddTask';
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Home from './Pages/Home/Home';
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/addTask" element={<AddTask />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
