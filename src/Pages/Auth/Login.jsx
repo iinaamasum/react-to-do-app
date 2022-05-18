@@ -131,7 +131,7 @@ const Login = () => {
                 </p>
 
                 <input
-                  className="btn my-3 w-full tracking-wider capitalize text-xl"
+                  className="btn btn-accent my-3 w-full tracking-wider capitalize text-xl"
                   value="LogIn"
                   type="submit"
                 />

@@ -41,21 +41,21 @@ const Navbar = () => {
               {user ? (
                 <button
                   onClick={() => signOut(auth)}
-                  className="w-full btn bg-slate-400 text-black  my-2"
+                  className="w-full btn btn-accent  my-2"
                 >
                   Sign Out
                 </button>
               ) : (
                 <>
                   <Link
-                    className="w-full btn bg-slate-400 text-black  my-2"
+                    className="w-full btn btn-accent text-white my-2"
                     to="/login"
                   >
                     LogIn
                   </Link>
                   <Link
-                    className="w-full btn bg-white outline-none border-0 text-accent hover:text-secondary"
-                    to="/signup"
+                    className="w-full btn bg-white hover:bg-gray-100 outline-none border-0 text-accent"
+                    to="/register"
                   >
                     Register
                   </Link>
@@ -111,12 +111,12 @@ const Navbar = () => {
             </button>
           ) : (
             <>
-              <Link className="btn bg-accent text-primary mr-2" to="/login">
+              <Link className="btn btn-accent mr-2" to="/login">
                 LogIn
               </Link>
               <Link
-                className="btn bg-white outline-none border-0 text-accent hover:text-secondary mr-2"
-                to="/signup"
+                className="btn bg-white hover:bg-gray-100 outline-none border-0 text-accent mr-2"
+                to="/register"
               >
                 Register
               </Link>

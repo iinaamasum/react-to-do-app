@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const Year = new Date().getFullYear();
-  const links = [
-    { id: 1, path: '/', name: 'Home' },
-    { id: 2, path: '/donation', name: 'Donation' },
-    { id: 3, path: '/events', name: 'Events' },
-    { id: 4, path: '/blogs', name: 'Blog' },
+  const navLinks = [
+    { id: 1, name: 'Home', path: '/' },
+    { id: 1, name: 'My Task', path: '/myTask' },
+    { id: 1, name: 'Add Task', path: '/addTask' },
   ];
   return (
     <>
@@ -83,7 +82,7 @@ const Footer = () => {
               <div className="order-none md:order-last">
                 <h4 className="text-blue-500 text-xl my-2">Shortcuts links</h4>
                 <div className="flex flex-col">
-                  {links.map((link) => (
+                  {navLinks.map((link) => (
                     <Link
                       className="mr-0 md:mr-10 text-md font-semibold text-gray-400 hover:text-red-800 transition-all duration-150 ease-in-out"
                       to={link.path}
