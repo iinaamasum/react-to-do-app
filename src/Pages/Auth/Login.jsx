@@ -115,16 +115,16 @@ const Login = () => {
                   Don't have an account?{' '}
                   <Link
                     className="btn-link text-purple-500 font-semibold"
-                    to="/signup"
+                    to="/register"
                   >
-                    Create Account Now
+                    Register Now
                   </Link>
                 </p>
                 <p>
                   Forgot Password?{' '}
                   <Link
                     className="btn-link text-purple-500 font-semibold"
-                    to="/signup"
+                    to="/resetPass"
                   >
                     Click Here To Reset
                   </Link>

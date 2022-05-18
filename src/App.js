@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
@@ -17,6 +18,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+      <Toaster />
     </section>
   );
 }

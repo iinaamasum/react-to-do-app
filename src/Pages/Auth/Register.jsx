@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import loginImg from '../../assets/images/log.png';
+import registerImg from '../../assets/images/signup.jpg';
 import auth from '../../firebase.init.js';
 import Social from './Social';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [user] = useAuthState(auth);
+  const [name, setName] = useState('');
   const {
     register,
     formState: { errors },
@@ -19,29 +19,62 @@ const Register = () => {
   } = useForm();
   const [createUserWithEmailAndPassword, userInput, loadingInput, errorInput] =
     useCreateUserWithEmailAndPassword(auth);
-  const onSubmit = (data) => {
-    //signInWithEmailAndPassword(data.email, data.password);
+  const [user] = useAuthState(auth);
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    setName(data.name);
+    await createUserWithEmailAndPassword(data.email, data.password);
   };
+  console.log(user);
 
   useEffect(() => {
     if (user) {
+      user.displayName = name;
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [user]);
+
   return (
     <section className="my-10">
       <div style={{ maxWidth: '1024px' }} className="container mx-auto px-4">
-        <div className="md:flex md:flex-row-reverse">
+        <div className="md:flex">
           <img
-            className="w-full md:w-1/2 hidden md:block pt-10"
-            src={loginImg}
+            className="w-full md:w-1/2 hidden md:block rounded-xl mr-6"
+            src={registerImg}
             alt=""
           />
 
           <div class="card w-full md:w-1/2 bg-base-100 shadow-lg mr-2">
             <div class="card-body">
-              <h2 class="card-title mx-auto text-4xl md:my-5">LogIn</h2>
+              <h2 class="card-title mx-auto text-4xl">Register</h2>
               <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+                <div class="form-control w-full">
+                  <label class="">
+                    <span class="text-secondary font-semibold text-lg">
+                      Name
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    class="input input-bordered w-full"
+                    {...register('name', {
+                      required: {
+                        value: true,
+                        message: 'Name is Required !!!',
+                      },
+                    })}
+                  />
+                  <label class="level font-bold">
+                    {errors.name?.type === 'required' && (
+                      <span className="label-text-alt text-red-500">
+                        {errors.name.message}
+                      </span>
+                    )}
+                  </label>
+                </div>
+
                 <div class="form-control w-full">
                   <label class="">
                     <span class="text-secondary font-semibold text-lg">
@@ -55,7 +88,7 @@ const Register = () => {
                     {...register('email', {
                       required: {
                         value: true,
-                        message: 'Email Required !!!',
+                        message: 'Email is Required !!!',
                       },
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
@@ -76,6 +109,7 @@ const Register = () => {
                     )}
                   </label>
                 </div>
+
                 <div class="form-control w-full">
                   <label class="">
                     <span class="text-secondary font-semibold text-lg">
@@ -89,7 +123,7 @@ const Register = () => {
                     {...register('password', {
                       required: {
                         value: true,
-                        message: 'Password Required !!!',
+                        message: 'Password is Required !!!',
                       },
                       pattern: {
                         value: /(?=.*[!#$%&?^*@~() "])(?=.{8,})/,
@@ -111,22 +145,14 @@ const Register = () => {
                     )}
                   </label>
                 </div>
+
                 <p className="mt-10">
-                  Don't have an account?{' '}
+                  Already have an account?{' '}
                   <Link
                     className="btn-link text-purple-500 font-semibold"
-                    to="/signup"
+                    to="/login"
                   >
-                    Create Account Now
-                  </Link>
-                </p>
-                <p>
-                  Forgot Password?{' '}
-                  <Link
-                    className="btn-link text-purple-500 font-semibold"
-                    to="/signup"
-                  >
-                    Click Here To Reset
+                    Login Now
                   </Link>
                 </p>
 

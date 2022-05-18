@@ -19,7 +19,7 @@ const Social = () => {
   const [signInWithGithub, userGit, loadingGit, errorGit] =
     useSignInWithGithub(auth);
 
-  const [user] = useAuthState(auth);
+  const [userSocial] = useAuthState(auth);
 
   useEffect(() => {
     const err = errorFb || errorGit || errorGo;
@@ -33,11 +33,11 @@ const Social = () => {
   }, [errorFb, errorGit, errorGo]);
 
   useEffect(() => {
-    if (user) {
-      toast.success(`Welcome ${user.displayName}`);
+    if (userSocial) {
+      toast.success(`Welcome ${userSocial.displayName}`);
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [userSocial, navigate]);
 
   return (
     <div className="text-center">

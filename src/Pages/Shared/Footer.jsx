@@ -8,8 +8,8 @@ const Footer = () => {
   const Year = new Date().getFullYear();
   const navLinks = [
     { id: 1, name: 'Home', path: '/' },
-    { id: 1, name: 'My Task', path: '/myTask' },
-    { id: 1, name: 'Add Task', path: '/addTask' },
+    { id: 2, name: 'My Task', path: '/myTask' },
+    { id: 3, name: 'Add Task', path: '/addTask' },
   ];
   return (
     <>
