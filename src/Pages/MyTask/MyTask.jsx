@@ -1,7 +1,19 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 import Navbar from '../Shared/Navbar';
 
 const MyTask = () => {
+  const [user] = useAuthState(auth);
+  const { isLoading, error, data } = useQuery('repoData', () =>
+    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+      (res) => res.json()
+    )
+  );
+
+  if (isLoading) return 'Loading...';
+
+  if (error) return 'An error has occurred: ' + error.message;
   return (
     <>
       <Navbar />
@@ -10,7 +22,7 @@ const MyTask = () => {
         className="mx-auto"
       >
         <h1 className="text-4xl font-bold text-center text-accent mb-5 mt-10 md:mt-16">
-          Hi ..., your all important task
+          Hi {user.displayName}, your all important task is here...
         </h1>
 
         <div className="my-5">

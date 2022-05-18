@@ -1,5 +1,8 @@
+import axios from 'axios';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import auth from '../../firebase.init';
 import Navbar from '../Shared/Navbar';
 
 const AddTask = () => {
@@ -8,9 +11,17 @@ const AddTask = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [user] = useAuthState(auth);
+
   const onSubmit = async (data) => {
-    console.log(data);
+    axios
+      .post('http://localhost:5000/task', {
+        ...data,
+        email: user.email,
+      })
+      .then((res) => console.log(res.data));
   };
+
   return (
     <>
       <Navbar />
@@ -31,7 +42,7 @@ const AddTask = () => {
                 {...register('name', {
                   required: {
                     value: true,
-                    message: 'Name is Required !!!',
+                    message: 'Task is Required !!!',
                   },
                 })}
               />
