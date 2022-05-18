@@ -1,41 +1,55 @@
 import React from 'react';
 import { RiMenuFoldFill } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const navLinks = [
+    { id: 1, name: 'Home', path: '/' },
+    { id: 1, name: 'My Task', path: '/myTask' },
+    { id: 1, name: 'Add Task', path: '/addTask' },
+  ];
   return (
-    <section>
+    <section
+      style={{ maxWidth: '1200px' }}
+      className="mx-auto container px-4 md:px-10 pt-1"
+    >
       <div class="drawer drawer-end">
-        <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+        <input id="menu" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col">
-          <div class="w-full navbar bg-base-300">
-            <div class="flex-1 px-2 mx-2">Navbar Title</div>
+          <div class="w-full navbar bg-primary rounded-full shadow">
+            <div class="flex-1 px-2 mx-2 text-accent text-3xl font-bold tracking-wide">
+              <Link to="/">Task Calc.</Link>
+            </div>
             <div class="flex-none lg:hidden">
-              <label for="my-drawer-3" class="btn btn-square btn-ghost">
+              <label for="menu" class="btn btn-square btn-ghost">
                 <RiMenuFoldFill size={35} />
               </label>
             </div>
 
             <div class="flex-none hidden lg:block">
-              <ul class="menu menu-horizontal">
-                <li>
-                  <a>Navbar Item 1</a>
-                </li>
-                <li>
-                  <a>Navbar Item 2</a>
-                </li>
+              <ul class="menu-horizontal mr-6">
+                {navLinks.map((link) => (
+                  <li key={link.id}>
+                    <Link
+                      className="mr-4 text-accent font-semibold uppercase"
+                      to={link.path}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
         <div class="drawer-side">
-          <label for="my-drawer-3" class="drawer-overlay"></label>
-          <ul class="menu p-4 overflow-y-auto w-80 bg-base-100">
-            <li>
-              <a>Sidebar Item 1</a>
-            </li>
-            <li>
-              <a>Sidebar Item 2</a>
-            </li>
+          <label for="menu" class="drawer-overlay"></label>
+          <ul class="menu p-4 overflow-y-auto w-80 bg-primary">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <Link to={link.path}>{link.name}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

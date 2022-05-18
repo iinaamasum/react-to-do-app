@@ -3,10 +3,10 @@ import Navbar from './Pages/Shared/Navbar';
 
 function App() {
   return (
-    <>
-      <Home />
+    <section className="bg-[#D4F1F4]">
       <Navbar />
-    </>
+      <Home />
+    </section>
   );
 }
 
