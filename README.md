@@ -1,6 +1,6 @@
 # task calc
 
-Link of the app [live site]().
+Link of the app [live site](https://task-calculator-2bdee.web.app/).
 
 ## Available Scripts
 
