@@ -1,3 +1,4 @@
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import AddTask from './Pages/AddTask/AddTask';

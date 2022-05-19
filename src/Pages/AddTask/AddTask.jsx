@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import auth from '../../firebase.init';
 import Navbar from '../Shared/Navbar';
 
@@ -10,6 +11,7 @@ const AddTask = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
   const [user] = useAuthState(auth);
 
@@ -17,9 +19,11 @@ const AddTask = () => {
     axios
       .post('http://localhost:5000/task', {
         ...data,
+        done: false,
         email: user.email,
       })
-      .then((res) => console.log(res.data));
+      .then((res) => toast.success('task added'));
+    reset();
   };
 
   return (
@@ -65,7 +69,7 @@ const AddTask = () => {
                 cols="30"
                 rows="5"
                 type="text"
-                placeholder="Enter your feedback"
+                placeholder="Enter your task details"
                 style={{ border: '1px solid #0FCFEC' }}
                 className="rounded-lg p-3 focus:outline-offset-2 resize-none focus:ring-inset input-bordered input-primary w-full"
                 {...register('des', {
@@ -86,7 +90,7 @@ const AddTask = () => {
             </div>
 
             <input
-              className="btn btn-accent my-3 w-full tracking-wider capitalize text-xl mt-5"
+              className="btn btn-accent my-3 text-center tracking-wider capitalize text-xl mt-5"
               value="Add Task"
               type="submit"
             />
