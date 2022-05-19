@@ -12,9 +12,9 @@ import Navbar from '../Shared/Navbar';
 const MyTask = () => {
   const [user] = useAuthState(auth);
   const { isLoading, error, data, refetch } = useQuery('myTask', () =>
-    fetch(`http://localhost:5000/tasks?email=${user.email}`).then((res) =>
-      res.json()
-    )
+    fetch(
+      `https://secret-castle-68433.herokuapp.com/tasks?email=${user.email}`
+    ).then((res) => res.json())
   );
 
   if (isLoading) return <Loading />;
@@ -45,7 +45,7 @@ const MyTask = () => {
   };
 
   const handleDelete = (id) => {
-    const url = `http://localhost:5000/task/${id}`;
+    const url = `https://secret-castle-68433.herokuapp.com/task/${id}`;
 
     fetch(url, {
       method: 'DELETE',
@@ -60,7 +60,7 @@ const MyTask = () => {
   };
 
   const handleUpdate = (id) => {
-    const url = `http://localhost:5000/task/${id}`;
+    const url = `https://secret-castle-68433.herokuapp.com/task/${id}`;
     axios
       .put(url, {
         done: true,

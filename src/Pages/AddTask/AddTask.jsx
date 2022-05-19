@@ -17,7 +17,7 @@ const AddTask = () => {
 
   const onSubmit = async (data) => {
     axios
-      .post('http://localhost:5000/task', {
+      .post('https://secret-castle-68433.herokuapp.com/task', {
         ...data,
         done: false,
         email: user.email,

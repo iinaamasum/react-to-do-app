@@ -28,7 +28,7 @@ const Register = () => {
     setName(data.name);
     await createUserWithEmailAndPassword(data.email, data.password);
     const { data: tokenData } = await axios.post(
-      'http://localhost:5000/login',
+      'https://secret-castle-68433.herokuapp.com/login',
       {
         email: data.email,
       }
