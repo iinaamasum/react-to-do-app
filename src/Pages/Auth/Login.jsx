@@ -4,31 +4,37 @@ import {
   useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from '../../assets/images/log.png';
 import auth from '../../firebase.init.js';
 import Navbar from '../Shared/Navbar';
 import Social from './Social';
 
 const Login = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
+  const [signInWithEmailAndPassword, userLogin, loadingLogin, errorLogin] =
+    useSignInWithEmailAndPassword(auth);
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [signInWithEmailAndPassword, inputUser, inputLoading, inputError] =
-    useSignInWithEmailAndPassword(auth);
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email, data.password);
+
+  const onSubmit = async (data) => {
+    await signInWithEmailAndPassword(data.email, data.password);
   };
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      toast.success(`Welcome ${user.displayName}`);
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, navigate, from]);
   return (
     <>
       <Navbar />

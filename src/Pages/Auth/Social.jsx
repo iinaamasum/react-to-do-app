@@ -32,13 +32,6 @@ const Social = () => {
     }
   }, [errorFb, errorGit, errorGo]);
 
-  useEffect(() => {
-    if (userSocial) {
-      toast.success(`Welcome ${userSocial.displayName}`);
-      navigate('/');
-    }
-  }, [userSocial, navigate]);
-
   return (
     <div className="text-center">
       <button

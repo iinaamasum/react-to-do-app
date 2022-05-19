@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   useAuthState,
@@ -26,6 +27,13 @@ const Register = () => {
     console.log(data);
     setName(data.name);
     await createUserWithEmailAndPassword(data.email, data.password);
+    const { data: tokenData } = await axios.post(
+      'http://localhost:5000/login',
+      {
+        email: data.email,
+      }
+    );
+    localStorage.setItem('token', tokenData.token);
   };
   console.log(user);
 

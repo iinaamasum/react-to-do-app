@@ -5,15 +5,13 @@ import Navbar from '../Shared/Navbar';
 
 const MyTask = () => {
   const [user] = useAuthState(auth);
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
-      (res) => res.json()
-    )
-  );
+  // const { isLoading, error, data } = useQuery('myTask', () =>
+  //   fetch(`nothinf`).then((res) => res.json())
+  // );
 
-  if (isLoading) return 'Loading...';
+  // if (isLoading) return 'Loading...';
 
-  if (error) return 'An error has occurred: ' + error.message;
+  // if (error) return 'An error has occurred: ' + error.message;
   return (
     <>
       <Navbar />
@@ -22,7 +20,7 @@ const MyTask = () => {
         className="mx-auto"
       >
         <h1 className="text-4xl font-bold text-center text-accent mb-5 mt-10 md:mt-16">
-          Hi {user.displayName}, your all important task is here...
+          Hi {user?.displayName}, your all important task is here...
         </h1>
 
         <div className="my-5">
